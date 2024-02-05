@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV != "production") {
 require('dotenv').config()
 }
-console.log(process.env.SECRET) 
+console.log(process.env.SECRET);
 
 const express = require("express");
 const app = express();
@@ -32,18 +32,18 @@ main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(dbUrl);
-}
+};
 
 
 
 
 
-app.set("viewengine","ejs");
+app.set("view engine","ejs");
 app.set("views", path.join(__dirname,"views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
-app.use(express.static(path.join(__dirname,"/public")))
+app.use(express.static(path.join(__dirname,"/public")));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -53,7 +53,7 @@ const store = MongoStore.create({
     touchAfter: 24 * 3600,
 });
 
-store.on("error", ()=> {
+store.on("error", (err)=> {
     console.log("Error in Mongo Session",err);
 });
 
@@ -63,7 +63,7 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: Date.now * 7 * 24 * 60 * 60 * 1000,
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     }
@@ -86,16 +86,8 @@ app.use((req,res,next)=> {
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
-})
+});
 
-// app.get("/demouser", async(req,res)=> {
-//   let fakeUser = new User({
-//     email: "abc@gmail.com",
-//     username: "abc",
-//   });
-//   let registeredUser = await User.register(fakeUser,"newlock");
-//   res.send(registeredUser);
-// });
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -103,14 +95,14 @@ app.use("/",userRouter);
 
 app.all("*",(req,res,next)=> {
     next(new ExpressError(404,"Page Not Found!"));
-})
+});
 
 app.use((err,req,res,next)=> {
     let{status=500,message="something went wrong"} = err;
     // res.status(status).send(message);
     res.status(status).render("error.ejs",{message});
-})
+});
 
 app.listen(8080, () => {
     console.log("app is working");
-})
+});
