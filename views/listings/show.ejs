@@ -76,7 +76,7 @@
         <div id="map" style="height: 400px; width: 700px;">
         </div>
     </div>
-
+<script>
   document.addEventListener('DOMContentLoaded', function () {
 
     let map = L.map('map').setView([43.70, -79.42], 13);
@@ -116,6 +116,7 @@
         marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
     });
 });
+</script>
  
 
 
