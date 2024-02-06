@@ -81,26 +81,24 @@
 
 
 
+I see. Let's try a different approach to debug the issue. Modify your show.ejs template as follows:
 
+ejs
+Copy code
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Assume that listingCoordinates is an array containing [latitude, longitude] for the listing
-        var listingCoordinates = [<%= listing.coordinates[0] %>, <%= listing.coordinates[1] %>];
-
-        var map = L.map('map').setView(listingCoordinates, 13);
+        var map = L.map('map').setView([43.70, -79.42], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        var markerData = {
-            location: listingCoordinates,
-            title: "<%= listing.title %>",
-            description: "A dynamic description for the marker."
-        };
+        var coordinates = <%= JSON.stringify(coordinates) %>;
 
-        var marker = L.marker(markerData.location).addTo(map);
-        marker.bindPopup(`<b>${markerData.title}</b><br>${markerData.description}`).openPopup();
+        console.log("Coordinates:", coordinates);
+
+        var marker = L.marker(coordinates).addTo(map);
+        marker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`).openPopup();
     });
 </script>
 
