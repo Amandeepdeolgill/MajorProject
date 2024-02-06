@@ -13,23 +13,48 @@ module.exports.index = async(req,res)=> {
 
 
 
-module.exports.showListing= async(req,res)=> {
-    let {id}= req.params;
-    let listing = await Listing.findById(id)
-    .populate({
-        path: "reviews",
-        populate: {
-            path:"author"
-        },
-        }) 
+// module.exports.showListing= async(req,res)=> {
+//     let {id}= req.params;
+//     let listing = await Listing.findById(id)
+//     .populate({
+//         path: "reviews",
+//         populate: {
+//             path:"author"
+//         },
+//         }) 
+//         .populate("owner");
+//     if(!listing){
+//         req.flash("error","Listing does not exist!");
+//         res.redirect("/listings");
+//     }
+//     console.log(listing);
+//     res.render("listings/show.ejs",{listing});
+//   };
+module.exports.showListing = async (req, res) => {
+    const { id } = req.params;
+
+    const listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author"
+            },
+        })
         .populate("owner");
-    if(!listing){
-        req.flash("error","Listing does not exist!");
-        res.redirect("/listings");
+
+    if (!listing) {
+        req.flash("error", "Listing does not exist!");
+        return res.redirect("/listings");
     }
+
     console.log(listing);
-    res.render("listings/show.ejs",{listing});
-  };
+
+    res.render("listings/show.ejs", {
+        listing,
+        coordinates: listing.coordinates, // Pass the coordinates to the template
+    });
+};
+
 
 
 
