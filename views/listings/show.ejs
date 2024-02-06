@@ -84,16 +84,20 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var map = L.map('map').setView([ <%= listing.coordinates %>], 13);
+        var map = L.map('map').setView([43.70, -79.42], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        var marker = L.marker([ <%= listing.location %>]).addTo(map);
+        var markerData = {
+            location: [43.70, -79.42],
+            title: "Toronto, Canada",
+            description: "A dynamic description for the marker."
+        };
 
-        // You can customize the marker, for example, add a popup
-        marker.bindPopup(<b> <%= listing.coordinates %></b>).openPopup();
+        var marker = L.marker(markerData.location).addTo(map);
+        marker.bindPopup(`<b>${markerData.title}</b><br>${markerData.description}`).openPopup();
     });
 </script>
 
