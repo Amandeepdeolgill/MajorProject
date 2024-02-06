@@ -81,22 +81,22 @@
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', async function () {
-        // Parse the coordinates string into an array
-        let coordinates = <%= JSON.stringify(coordinates) %>;
 
-        let map = L.map('map').setView(coordinates, 13);
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var map = L.map('map').setView([ <%= listing.coordinates %>], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Add a marker for the listing's location
-        var listingMarker = L.marker(coordinates).addTo(map);
-        listingMarker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`).openPopup();
+        var marker = L.marker([ <%= listing.location %>]).addTo(map);
+
+        // You can customize the marker, for example, add a popup
+        marker.bindPopup(<b> <%= listing.coordinates %></b>).openPopup();
     });
 </script>
+
 
 
 
