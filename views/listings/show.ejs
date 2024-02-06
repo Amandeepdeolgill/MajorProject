@@ -76,40 +76,35 @@
         <div id="map" style="height: 400px; width: 700px;">
         </div>
     </div>
-<script>
-    document.addEventListener('DOMContentLoaded', async function () {
+   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-        let map = L.map('map').setView([43.70, -79.42], 13);
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            let map = L.map('map').setView([43.70, -79.42], 13);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
 
-        // Asynchronous function to fetch locations dynamically
-        async function fetchLocations() {
-            try {
-                // Replace this with your actual logic to fetch locations from a server or other source
-                const response = await fetch('/api/locations'); // Example endpoint
-                const data = await response.json();
-                return data.locations || [];
-            } catch (error) {
-                console.error('Error fetching locations:', error);
-                return [];
+            async function fetchLocations() {
+                try {
+                    const response = await fetch('/api/locations');
+                    const data = await response.json();
+                    return data.locations || [];
+                } catch (error) {
+                    console.error('Error fetching locations:', error);
+                    return [];
+                }
             }
-        }
 
-        // Fetch locations
-        let locations = await fetchLocations();
+            let locations = await fetchLocations();
 
-        // Add markers for each location
-        locations.forEach(function (location) {
-            var marker = L.marker(location.coordinates).addTo(map);
-            marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
+            locations.forEach(function (location) {
+                var marker = L.marker(location.coordinates).addTo(map);
+                marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
+            });
         });
-    });
-</script>
-
-
+    </script>
 
 
 
