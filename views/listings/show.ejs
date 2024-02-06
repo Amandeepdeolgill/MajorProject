@@ -78,35 +78,14 @@
     </div>
  <script>
     document.addEventListener('DOMContentLoaded', async function () {
-    <% if (listing.coordinates && listing.coordinates.length === 2) { %>
-        let listingCoordinates = [<%= listing.coordinates[0] %>, <%= listing.coordinates[1] %>];
-        let map = L.map('map').setView(listingCoordinates, 13);
+        let map = L.map('map').setView(<%= JSON.stringify(coordinates) %>, 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        async function fetchLocations() {
-            try {
-                const response = await fetch('/api/locations');
-                const data = await response.json();
-                return data.locations || [];
-            } catch (error) {
-                console.error('Error fetching locations:', error);
-                return [];
-            }
-        }
-
-        let locations = await fetchLocations();
-
-        locations.forEach(function (location) {
-            var marker = L.marker(location.coordinates).addTo(map);
-            marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
-        });
-    <% } else { %>
-        console.error('Listing coordinates not available.');
-    <% } %>
-});
+        // Your existing code to fetch and add markers can go here
+    });
 
 </script>
 
