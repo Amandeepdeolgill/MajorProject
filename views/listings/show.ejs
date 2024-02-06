@@ -84,22 +84,26 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var map = L.map('map').setView([43.70, -79.42], 13);
+        // Assume that listingCoordinates is an array containing [latitude, longitude] for the listing
+        var listingCoordinates = [<%= listing.coordinates[0] %>, <%= listing.coordinates[1] %>];
+
+        var map = L.map('map').setView(listingCoordinates, 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         var markerData = {
-            location: [43.70, -79.42],
-            title: "Toronto, Canada",
+            location: listingCoordinates,
+            title: "<%= listing.title %>",
             description: "A dynamic description for the marker."
         };
 
         var marker = L.marker(markerData.location).addTo(map);
-        marker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`).openPopup();
+        marker.bindPopup(`<b>${markerData.title}</b><br>${markerData.description}`).openPopup();
     });
 </script>
+
 
 
 
