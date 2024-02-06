@@ -97,7 +97,7 @@
         };
 
         var marker = L.marker(markerData.location).addTo(map);
-        marker.bindPopup(`<b>${markerData.title}</b><br>${markerData.description}`).openPopup();
+        marker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`).openPopup();
     });
 </script>
 
