@@ -81,55 +81,21 @@
 
 
 
-<script>
-    function haversine(lat1, lon1, lat2, lon2) {
-        const R = 6371;
-        const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-    }
-</script>
+
+
+<div id="map" style="height: 400px; width: 700px;"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', async function () {
-        let map;
+        let map = L.map('map').setView(<%= JSON.stringify(coordinates) %>, 13);
 
-        function haversine(lat1, lon1, lat2, lon2) {
-            // ... (same as above)
-        }
-
-        let listingCoordinates = [<%= listing.coordinates[0] %>, <%= listing.coordinates[1] %>];
-        map = L.map('map').setView(listingCoordinates, 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        var listingMarker = L.marker(listingCoordinates).addTo(map);
-        listingMarker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`);
-
-        // Your existing code to fetch and add more markers can go here
-
-        let anotherLocationCoordinates = [/* coordinates of another location */];
-        let distance = haversine(listingCoordinates[0], listingCoordinates[1], anotherLocationCoordinates[0], anotherLocationCoordinates[1]);
-
-        let zoomLevel = 13;
-        if (distance > /* some threshold value */) {
-            zoomLevel = /* calculate a new zoom level based on the distance */;
-        }
-
-        map.setZoom(zoomLevel);
+        // Your existing code to fetch and add markers can go here
     });
 </script>
-
-
-
-
-
 
 
 
