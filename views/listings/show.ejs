@@ -78,9 +78,8 @@
     </div>
  <script>
     document.addEventListener('DOMContentLoaded', async function () {
-        // Assume that listingCoordinates is an array containing [latitude, longitude] for the listing
+    <% if (listing.coordinates && listing.coordinates.length === 2) { %>
         let listingCoordinates = [<%= listing.coordinates[0] %>, <%= listing.coordinates[1] %>];
-
         let map = L.map('map').setView(listingCoordinates, 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -104,7 +103,11 @@
             var marker = L.marker(location.coordinates).addTo(map);
             marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
         });
-    });
+    <% } else { %>
+        console.error('Listing coordinates not available.');
+    <% } %>
+});
+
 </script>
 
  
