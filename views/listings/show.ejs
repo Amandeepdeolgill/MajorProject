@@ -84,9 +84,12 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Your existing code to fetch and add markers can go here
-    });
+        // Add a marker for the listing's location
+        var listingMarker = L.marker(<%= JSON.stringify(coordinates) %>).addTo(map);
+        listingMarker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`);
 
+        // Your existing code to fetch and add more markers can go here
+    });
 </script>
 
  
