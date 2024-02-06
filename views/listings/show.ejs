@@ -80,26 +80,24 @@
 
 
 
+
 <script>
     document.addEventListener('DOMContentLoaded', async function () {
-        let map = L.map('map').setView(<%= JSON.stringify(coordinates) %>, 13);
+        // Parse the coordinates string into an array
+        let coordinates = <%= JSON.stringify(coordinates) %>;
+
+        let map = L.map('map').setView(coordinates, 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         // Add a marker for the listing's location
-        var listingMarker = L.marker(<%= JSON.stringify(coordinates) %>).addTo(map);
+        var listingMarker = L.marker(coordinates).addTo(map);
         listingMarker.bindPopup(`<b><%= listing.title %></b><br><%= listing.location %>`).openPopup();
-
-
-
-
-
-
-
     });
 </script>
+
 
 
 
