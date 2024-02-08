@@ -1,5 +1,4 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<%= success %>
   
 <div class="filters">
   <div class="filter">
@@ -52,19 +51,17 @@
     <label class="form-check-label" for="flexSwitchCheckDefault">Display Taxes</label>
   </div>
 </div>
-
-
 </div>
-   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mb-5">
         <% for(let listing of allListings){ %>
           <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col" style="width: 20rem;">
+        <div class="card col mb-5" style="width: 20rem;">
             <img src="<%= listing.img.url %>" class="card-img-top" style="height: 20rem;" alt="listing-img">
             <div class="card-img-overlay"></div>
             <div class="card-body">
               <p class="card-text">
                 <p><b><%= listing.title %></b></p>
-              <p>&dollar;<%= listing.price %> per night
+              <p>&dollar;<%= listing.price %>/night
               <i class="tax-info"> &nbsp; &nbsp; +13% GST</i></p>
               </p>
             </div>
@@ -72,8 +69,6 @@
         </a>
           <% }  %>
         </div>
-<br><br><br><br><br><br>
-
 <script>
   let taxSwitch = document.getElementById("flexSwitchCheckDefault");
   taxSwitch.addEventListener("click", ()=> {
@@ -88,3 +83,4 @@
     }
   })
 </script>
+
