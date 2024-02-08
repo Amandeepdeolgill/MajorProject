@@ -1,9 +1,9 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<div class="row mt-3">
+<div class="row mt-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
     <div class="col-8 offset-3">
     <h2><b><%= listing.title %></b></h2>
     <br>
-</div>
+    </div>
     <div class="card col-8 offset-3" style="width: 20rem;">
         <img src="<%= listing.img.url %>" class="show-img card-img-top" alt="listing-img">
         </div>
@@ -15,9 +15,9 @@
         <%= listing.location %><br>
         <%= listing.country %></p>
         </div>
-      </div>
+    </div>
       <br>
-      <div class="btns">
+    <div class="btns">
         <a href="/listings/<%= listing._id %>/edit" class="btn add-btn offset-3">Edit</a>
         
         <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
@@ -29,9 +29,9 @@
       <% if(currUser) { %>
       <h2>Leave a review:</h2>
         <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-          <div class="mb-3 mt-3">
-            <label for="rating" class="form-label">Rating</label>
-          <fieldset class="starability-heart">
+        <div class="mb-3 mt-3">
+          <label for="rating" class="form-label">Rating</label>
+        <fieldset class="starability-heart">
             <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
             <input type="radio" id="first-rate1" name="review[rating]" value="1" />
             <label for="first-rate1" title="Terrible">1 star</label>
@@ -43,11 +43,11 @@
             <label for="first-rate4" title="Very good">4 stars</label>
             <input type="radio" id="first-rate5" name="review[rating]" value="5" />
             <label for="first-rate5" title="Amazing">5 stars</label>
-          </fieldset>
+        </fieldset>
         </div>
-          <div class="mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label for="comment" class="form-label">Comment:</label>
-            <textarea id="comment" class="form-control" placeholder="Add your valuable comments:" cols="5" rows="5" name="review[comment]" required></textarea>
+            <textarea id="comment" class="form-control" placeholder="Add your valuable comments:" cols="4" rows="4" name="review[comment]" required></textarea>
             <div class="invalid-feedback">Please add some comments!</div></div>
           <button class="btn add-btn">Submit</button>
         </form>
@@ -55,7 +55,7 @@
         <hr>
         <div>
           <h2>Reviews:</h2>
-          <div class="row">
+          <div class="row mt-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
           <% for(review of listing.reviews){ %>
           <div class="card col-5 ms-3 mb-3">
             <div class="card-body">
@@ -72,58 +72,29 @@
           </div>
               <% } %>
             </div>
+            <hr>
+         <h2>Where you'll be:</h2>
+        <div id="map" style="height: 300px; width: 630px">
         </div>
-        <div id="map" style="height: 400px; width: 700px;">
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              var map = L.map('map').setView([0, 0], 2); 
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                  attribution: '© OpenStreetMap contributors'
+              }).addTo(map);
+              function addNewLocation(lat, lng, title, description) {
+                  var newLocation = {
+                      coordinates: [lat, lng],
+                      title: title,
+                      description: description
+                  };
+                  var marker = L.marker(newLocation.coordinates).addTo(map);
+                  marker.bindPopup(`<b>${newLocation.title}</b><br>${newLocation.description}`);
+              }
+              addNewLocation(40.71, -74.01, "New York City, USA", "A dynamic description for New York City.");
+          });
+      </script>
         </div>
-    </div>
-
-
-
-<div id="map" style="height: 400px; width: 700px;"></div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Initialize the map centered around Toronto, Canada
-        var map = L.map('map').setView([43.70, -79.42], 13);
-
-        // Add a tile layer (you can use different map providers)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Example dataset with dynamic information for each location
-        var locations = [
-            {
-                coordinates: [43.70, -79.42],
-                title: "Toronto, Canada",
-                description: "A dynamic description for Toronto."
-            },
-            {
-                coordinates: [40.71, -74.01],
-                title: "New York City, USA",
-                description: "A dynamic description for New York City."
-            },
-            {
-                coordinates: [34.05, -118.24],
-                title: "Los Angeles, USA",
-                description: "A dynamic description for Los Angeles."
-            },
-            {
-                coordinates: [51.51, -0.13],
-                title: "London, UK",
-                description: "A dynamic description for London."
-            },
-            // Add more locations as needed
-        ];
-
-        // Loop through each location and add a marker with dynamic popup content
-        locations.forEach(function (location) {
-            var marker = L.marker(location.coordinates).addTo(map);
-            marker.bindPopup(`<b>${location.title}</b><br>${location.description}`);
-        });
-    });
-</script>
-
 
 
 
