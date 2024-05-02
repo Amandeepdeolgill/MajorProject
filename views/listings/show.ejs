@@ -1,31 +1,32 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<div class="row mt-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-    <div class="col-8 offset-3">
+<div class="row mt-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 show-container">
+    <div class="col-8 offset-1">
     <h2><b><%= listing.title %></b></h2>
     <br>
     </div>
-    <div class="card col-8 offset-3" style="width: 20rem;">
+    <div class="col-7 card card-show offset-1">
         <img src="<%= listing.img.url %>" class="show-img card-img-top" alt="listing-img">
         </div>
-        <div class="card-body offset-3">
+        <div class="card-body offset-1">
           <p class="card-text"><br>
-          Owned by:<%= listing.owner.username %><br>
+          <b>Owned by:<%= listing.owner.username %><br>
            <%= listing.description %><br>
          &dollar;<%= listing.price %><br>
         <%= listing.location %><br>
         <%= listing.country %></p>
+        </b>
         </div>
     </div>
       <br>
     <div class="btns">
-        <a href="/listings/<%= listing._id %>/edit" class="btn add-btn offset-3">Edit</a>
+        <a href="/listings/<%= listing._id %>/edit" class="btn add-btn offset-1">Edit</a>
         
         <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
             <button class="btn btn-dark offset-5">Delete</button>
         </form>
     </div>
     <br>
-    <div class="col-8 offset-3">
+    <div class="col-8 offset-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 leave-review">
       <% if(currUser) { %>
       <h2>Leave a review:</h2>
         <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
@@ -47,34 +48,37 @@
         </div>
         <div class="mb-3 mt-3">
             <label for="comment" class="form-label">Comment:</label>
-            <textarea id="comment" class="form-control" placeholder="Add your valuable comments:" cols="4" rows="4" name="review[comment]" required></textarea>
-            <div class="invalid-feedback">Please add some comments!</div></div>
+            <textarea id="comment" class="form-control" placeholder="Add your valuable comments:" cols="3" rows="5" name="review[comment]" required></textarea>
+            <div class="invalid-feedback comment">Please add some comments!</div></div>
           <button class="btn add-btn">Submit</button>
         </form>
         <% } %>
         <hr>
         <div>
           <h2>Reviews:</h2>
-          <div class="row mt-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+          <div class="row mt-3 d-flex review-container">
           <% for(review of listing.reviews){ %>
-          <div class="card col-5 ms-3 mb-3">
-            <div class="card-body">
+            <div class="card ms-3 mb-3 review">
               <div class="card-title">
-               <b>Reviewer: @<%= review.author.username %></b>
+                <b>Reviewer: @<%= review.author.username %></b>
               </div>
-              <p class="starability-result card-text" data-rating=<%= review.rating %>></p>
+              <div class="card-body">
+              <p class="starability-result stars card-text" data-rating=<%= review.rating %>></p>
               <p class="card-text"><%= review.comment %></p>
             </div>
+        
             <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
               <br>
               <button class="btn btn-sm btn-danger">Delete</button>
             </form>
           </div>
+        
               <% } %>
+            </div>
             </div>
             <hr>
          <h2>Where you'll be:</h2>
-        <div id="map" style="height: 300px; width: 630px">
+        <div class="mb-5" id="map" style="height: 300px;">
         </div>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
@@ -95,6 +99,12 @@
           });
       </script>
         </div>
+
+
+        
+  
+
+
 
 
 
