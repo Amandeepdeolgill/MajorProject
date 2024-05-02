@@ -152,6 +152,9 @@ text-align: center;
         width: 100% !important;
         height:15rem;
     }
+    #comment {
+    width: 70vw !important;
+    }
     #map {
         width: 80vw !important;
     }
@@ -164,8 +167,8 @@ text-align: center;
         padding-right:1rem !important;
         width: 70vw !important;
     }
-    .comment {
-        width: 80vw !important;
+    #comment {
+        width: 70vw !important;
     }
   
 } 
