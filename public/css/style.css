@@ -1,7 +1,10 @@
+
 .body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 .container {
     flex: 1;
@@ -58,10 +61,11 @@
 .footer-links a:hover {
     text-decoration: underline;
 }
-footer {
-    position: fixed;
+.footer {
+position: relative;
 left: 0;
 bottom: 0;
+right: 0;
 width: 100%;
 text-align: center;
 }
@@ -71,14 +75,16 @@ text-align: center;
 .card {
     border: none;
     margin: 0.5rem;
-    border-radius: 1rem !important;
+    border-radius: 1.25rem !important;
 }
+
+
 .card-body {
-    padding: 0 0.5rem 0 0.5rem !important;
+    padding: 0.5rem !important;
 }
     
 .card-img-top {
-    border-radius: 1rem !important;
+    border-radius: 1.25rem !important;
     width: 100% !important;
 }
 .listing-link {
@@ -88,18 +94,88 @@ text-align: center;
     background-color: white;
     opacity: 0.3;
 }
+
+/* show page styling*/
 .add-btn {
     background-color: red !important;
     color: white !important;
 }
 
 .show-img {
-    width: 100vh !important;
+    width: 100% !important;
     height: 18rem;
+}
+.show-container {
+    width: 100% !important;
+    text-align: left;
+}
+.card-show  {
+    width: 90% !important;
+    border-radius: 1rem;
+}
+
+
+.leave-review {
+    width: 100% !important;
 }
 .btns {
     display: flex;
 }
+.review-container {
+    width:70vw !important;
+    padding-top: 1rem;
+    height: auto;
+}
+.review {
+  width: 30vw !important;
+  /* display: flex; */
+  padding: 1rem;
+}
+
+#map {
+    border-radius: 1rem;
+    width: 90% !important;
+    height: 30rem;
+}
+
+
+
+@media (min-width:300px) and (max-width:810px){
+    .show-container {
+        width: 100% !important;
+
+    }
+    .card-show {
+        width:90% !important;
+    }
+    .show-img {
+        width: 100% !important;
+        height:15rem;
+    }
+    #map {
+        width: 80vw !important;
+    }
+    .review-container {
+        width:90vw !important;
+        padding-top: 1rem;
+        height: auto;
+    }
+    .review {
+        padding-right:1rem !important;
+        width: 70vw !important;
+    }
+    .comment {
+        width: 80vw !important;
+    }
+  
+} 
+.starability-result .stars {
+    font-size: xx-small;
+}
+
+
+
+
 
 /* Index page */
 .filters {
@@ -131,7 +207,4 @@ text-align: center;
       align-items: center;
       margin-left: 1.25rem;
     }
-   #map {
-        margin-bottom: 10rem;
-        border-radius: 1rem;
-    }
+   
