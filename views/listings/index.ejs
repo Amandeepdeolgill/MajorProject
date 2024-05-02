@@ -55,14 +55,14 @@
    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mb-5">
         <% for(let listing of allListings){ %>
           <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col mb-5" style="width: 20rem;">
+        <div class="card col mb-5" style="width: 18rem;">
             <img src="<%= listing.img.url %>" class="card-img-top" style="height: 20rem;" alt="listing-img">
             <div class="card-img-overlay"></div>
             <div class="card-body">
               <p class="card-text">
                 <p><b><%= listing.title %></b></p>
               <p>&dollar;<%= listing.price %>/night
-              <i class="tax-info"> &nbsp; &nbsp; +13% GST</i></p>
+              <i class="tax-info">&nbsp;&nbsp; &nbsp; &nbsp; &dollar;<%= (listing.price *13 /100) + listing.price %>/night (after taxes)</i></p>
               </p>
             </div>
           </div>
@@ -83,4 +83,5 @@
     }
   })
 </script>
+
 
